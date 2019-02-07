@@ -58,7 +58,7 @@ border-color: rgb(130, 159, 255);
       <property name="title">
        <string>state/city</string>
       </property>
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="stateList">
        <property name="geometry">
         <rect>
          <x>130</x>
@@ -98,7 +98,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>City</string>
        </property>
       </widget>
-      <widget class="QListWidget" name="listWidget">
+      <widget class="QListWidget" name="cityList">
        <property name="geometry">
         <rect>
          <x>130</x>
@@ -128,7 +128,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
       <property name="title">
        <string>Business</string>
       </property>
-      <widget class="QTableWidget" name="tableWidget">
+      <widget class="QTableWidget" name="businessTable">
        <property name="geometry">
         <rect>
          <x>30</x>
