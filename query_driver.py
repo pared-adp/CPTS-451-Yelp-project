@@ -22,6 +22,9 @@ class milestone1(QMainWindow):
         self.ui.setupUi(self)
         self.loadStateList()
         self.ui.stateList.currentTextChanged.connect(self.stateChanged)
+        self.ui.cityList.itemSelectionChanged.connect(self.cityChanged)
+        #self.ui.bname.textChanged.connect(self.getBusinessNames)
+        #self.ui.businesses.itemSelectionChanged.connect(self.displayBusinessCity)
     def executeQuery(self, sql_str):
         try: 
             conn = psycopg2.connect("dbname='milestone1' user ='postgres' host='localhost' password='Mich@el8114'")
@@ -56,14 +59,76 @@ class milestone1(QMainWindow):
                     self.ui.cityList.addItem(row[0])
             except:
                 print("Query Failed!")
+            for i in reversed(range(self.ui.businessTable.rowCount())):
+                self.ui.businessTable.removeRow(i)
             sql_str = "SELECT name, city, state FROM business WHERE state ='" + state + "' ORDER BY name;"
             try:
                 results = self.executeQuery(sql_str)
+                style = ":: section(""background-color: #f3f3f3; )"
+                self.ui.businessTable.horizontalHeader().setStyleSheet(style)
+                self.ui.businessTable.setColumnCount(len(results[0]))
+                self.ui.businessTable.setRowCount(len(results))
+                self.ui.businessTable.setHorizontalHeaderLabels(['Business Name', 'City', 'State'])
+                self.ui.businessTable.resizeColumnsToContents()
+                self.ui.businessTable.setColumnWidth(0,300)
+                self.ui.businessTable.setColumnWidth(1,100)
+                self.ui.businessTable.setColumnWidth(2, 50)
+                
+                currentRowCount = 0
                 for row in results:
-                    
+                    for colCount in range(0,len(results[0])):
+                        self.ui.businessTable.setItem(currentRowCount,colCount,QTableWidgetItem(row[colCount]))
+                    currentRowCount += 1
                 
             except:
                 print("Query Failed!!")
+                
+    def cityChanged(self):
+        if (self.ui.stateList.currentIndex() >= 0) and (len(self.ui.cityList.selectedItems()) > 0):
+            state = self.ui.stateList.currentText()
+            city = self.ui.cityList.selectedItems()[0].text()
+            sql_str = "SELECT name, city, state FROM business WHERE city ='" + city + "' AND state= '" + state + "'ORDER BY name;" 
+            results = self.executeQuery(sql_str)
+            try:
+                results = self.executeQuery(sql_str)
+                style = ":: section(""background-color: #f3f3f3; )"
+                self.ui.businessTable.horizontalHeader().setStyleSheet(style)
+                self.ui.businessTable.setColumnCount(len(results[0]))
+                self.ui.businessTable.setRowCount(len(results))
+                self.ui.businessTable.setHorizontalHeaderLabels(['Business Name', 'City', 'State'])
+                self.ui.businessTable.resizeColumnsToContents()
+                self.ui.businessTable.setColumnWidth(0,300)
+                self.ui.businessTable.setColumnWidth(1,100)
+                self.ui.businessTable.setColumnWidth(2, 50)
+                    
+                currentRowCount = 0
+                for row in results:
+                    for colCount in range(0,len(results[0])):
+                        self.ui.businessTable.setItem(currentRowCount,colCount,QTableWidgetItem(row[colCount]))
+                    currentRowCount += 1
+                    
+            except:
+                print("Query Failed!!")
+                
+#    def getBusinessNames(self):
+#        self.ui.businesses.clear()
+#        businessname = self.ui.bname.text()
+#        sql_str = "SELECT name FROM business WHERE name LIKE '%" +businessname+ "%' ORDER BY name;"
+#        try:
+#            results = self.executeQuery(sql_str)
+#            for row in results:
+#                self.ui.businesses.addItem(row[0])
+#        except:
+#            print("Query Failed!!!")
+#    def displayBusinessCity(self):
+#        businessname = self.ui.businesses.selectedItems()[0].text()
+#        sql_str = "SELECT city FROM business WHERE name ='" +businessname + "';"
+#        try:
+#            results = self.executeQuery(sql_str)
+#            self.ui.bcity.setText(results[0][0])
+#        except:
+#            print("Query Failed!!!!")
+                
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = milestone1()
