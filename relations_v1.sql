@@ -20,4 +20,5 @@ CREATE TABLE Votes (
 	votes_Cool INTEGER,
 	votes_Useful INTEGER,
 	FOREIGN KEY (user_ID) REFERENCES User(user_ID)
+	FOREIGN KEY (review_ID) REFERENCES Review(review_ID)
 );
