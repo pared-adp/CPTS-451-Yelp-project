@@ -32,4 +32,13 @@ CREATE TABLE Review(
 	PRIMARY KEY(review_id)
 );
 
-
+CREATE TABLE Reviews(
+	review_ID CHAR(11) PRIMARY KEY,
+	name VARCHAR(50),
+	user_id CHAR,
+	business_id CHAR,
+	FOREIGN KEY(review_id) REFERENCES Review(review_id),
+	FOREIGN KEY(business_id) REFERENCES Business(business_id),
+	FOREIGN KEY(user_id) REFERENCES Friend(user_id),
+	FOREIGN KEY(name) REFERENCES USER(name),
+)
