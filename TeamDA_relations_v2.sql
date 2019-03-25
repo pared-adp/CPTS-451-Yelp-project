@@ -39,7 +39,7 @@ CREATE TABLE Business (
 	busi_city VARCHAR(30),
 	numcheckin INTEGER,
 	busaddress VARCHAR(200),
-	buspostal CHAR(10)
+	buspostal CHAR(10) UNIQUE,
 	busopen VARCHAR(200),
 	PRIMARY KEY (busi_id)
 );
@@ -48,10 +48,10 @@ CREATE TABLE Zipcode (
 	buspostal CHAR(10),
 	busi_id CHAR(60),
 	zip_population INTEGER,
-	zip_avg_income INTEGER,
+	zip_avg_income INTEGER UNIQUE,
 	zip_total_num_of_busi INTEGER,
 	PRIMARY KEY (buspostal, busi_id),
-	FOREIGN KEY (buspostal) REFERENCES Business(buspostal)
+	FOREIGN KEY (buspostal) REFERENCES Business(buspostal),
 	FOREIGN KEY (busi_id) REFERENCES Business(busi_id)
 );
 
@@ -59,7 +59,7 @@ CREATE TABLE Overpriced (
 	over_name VARCHAR(50),
 	over_price_range INTEGER,
 	over_num_of_checkin INTEGER,
-	zip_avg_income INTERGER,
+	zip_avg_income INTEGER,
 	PRIMARY KEY (over_name),
 	FOREIGN KEY (zip_avg_income) REFERENCES Zipcode(zip_avg_income)
 );
@@ -126,7 +126,7 @@ CREATE TABLE Reviews (
 	PRIMARY KEY (review_id,user_id, busi_id),
 	FOREIGN KEY (review_id) REFERENCES Review(review_id),
 	FOREIGN KEY (user_id) REFERENCES Users(user_id),
-	FOREIGN KEY (busi_id) REFERENCES Business(business_id)
+	FOREIGN KEY (busi_id) REFERENCES Business(busi_id)
 );
 
 
