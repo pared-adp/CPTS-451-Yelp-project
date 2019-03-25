@@ -83,41 +83,7 @@ CREATE TABLE Successful (
 	FOREIGN KEY (zip_avg_income) REFERENCES Zipcode(zip_avg_income)
 );
 
-CREATE TABLE Category (
-	cat_name VARCHAR(50),
-	busi_id CHAR(60),
-	PRIMARY KEY (cat_name, busi_id),
-	FOREIGN KEY (busi_id) REFERENCES Business(busi_id)
-);
 
-CREATE TABLE BAttributes (
-	att_name VARCHAR(50),
-	att_value CHAR(100),
-	busi_id CHAR(60),
-	PRIMARY KEY (att_name, busi_id),
-	FOREIGN KEY (busi_id) REFERENCES Business(busi_id)
-	
-);
-
-CREATE TABLE BHours(
-	day VARCHAR(50),
-	close CHAR(100),
-	open CHAR(60),
-	busi_id CHAR(60),
-	PRIMARY KEY (day, busi_id),
-	FOREIGN KEY (busi_id) REFERENCES Business(busi_id)
-	
-);
-
-CREATE TABLE BCheckins(
-	day VARCHAR(50),
-	time CHAR(100),
-	bCount CHAR(60),
-	busi_id CHAR(60),
-	PRIMARY KEY (day, busi_id),
-	FOREIGN KEY (busi_id) REFERENCES Business(busi_id)
-	
-);
 
 CREATE TABLE Reviews (
 	review_id CHAR(100),
@@ -129,5 +95,10 @@ CREATE TABLE Reviews (
 	FOREIGN KEY (busi_id) REFERENCES Business(busi_id)
 );
 
-
-
+CREATE TABLE Votes (
+	votes_funny INTEGER,
+	votes_Cool INTEGER,
+	votes_Useful INTEGER,
+	FOREIGN KEY (user_id) REFERENCES User(user_id),
+	FOREIGN KEY (review_id) REFERENCES Review(review_id)
+);
